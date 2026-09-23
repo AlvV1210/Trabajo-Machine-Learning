@@ -3,6 +3,9 @@
 Parte del panel semanal por cuadrante. perdida_ha es la pérdida observada en
 esa misma semana y cuadrante: cada alerta ATD es un píxel de la malla medida
 (30 m), es decir 0.09 ha. No arma horizontes a 7 ni a 30 días.
+
+alerta_observada es una columna de auditoría: no debe utilizarse como predictor
+contemporáneo porque se deriva del mismo conteo que origina perdida_ha.
 """
 
 from __future__ import annotations
@@ -38,8 +41,12 @@ def definir_target(panel: pd.DataFrame) -> pd.DataFrame:
     """Hectáreas de pérdida observadas en la misma semana y cuadrante.
 
     La semana sin alerta ATD queda en cero: ese producto no registró pérdida.
+    alerta_observada conserva si existía un conteo original antes del relleno.
     """
     tabla = panel.sort_values(["cuadrante_id", "semana"]).reset_index(drop=True)
+    tabla["alerta_observada"] = tabla["n_alertas"].notna()
+    if tabla["alerta_observada"].isna().any():
+        raise ValueError("alerta_observada no puede contener valores nulos.")
     tabla["perdida_ha"] = tabla["n_alertas"].fillna(0) * HECTAREAS_POR_ALERTA
     return tabla
 
