@@ -1,24 +1,24 @@
 # Hito 2 - Preparación y Baseline
 
-Este entregable corresponde a la fase 3 y 4 inicial de CRISP-DM para el proyecto BIODIVERSITY-GUARD Predict.
+Este entregable corresponde a la fase 3 y 4 inicial de la metodología CRISP-DM para el proyecto BIODIVERSITY-GUARD Predict.
 
 ## Objetivo
-Demostrar que los datos ya están preparados para modelado y que existe un modelo base funcional para ambos frentes analíticos:
-- Frente 1: regresión de pérdida de cobertura forestal (`perdida_ha`)
-- Frente 2: clasificación del nivel de riesgo (`Nivel_Riesgo`)
+Demostrar que los datos están listos para el modelado y que existe un modelo base funcional para nuestros dos frentes analíticos:
+* Frente 1: regresión de la pérdida de cobertura forestal (`perdida_ha`)
+* Frente 2: clasificación del nivel de riesgo de incursión (`Nivel_Riesgo`)
 
-## Contenido
-- Preparación de datos con limpieza, imputación y feature engineering
-- Baseline inicial con métricas reales
-- Dashboard preliminar con visualizaciones predictivas
+## Contenido aplicado
+* Preparación de datos con imputación por interpolación lineal para el clima y medianas para las distancias espaciales.
+* Ingeniería de características avanzada creando rezagos predictivos a siete y veintiocho días, medias móviles climáticas y variables derivadas como el índice de estrés hídrico.
+* Manejo riguroso del desbalanceo de clases aplicando la técnica de sobremuestreo sintético para la clasificación y penalización por pesos de muestra para la regresión.
+* Modelado base con algoritmos de bosques aleatorios evaluados con métricas exactas y previniendo la fuga de datos temporales.
+* Panel interactivo dinámico para la visualización en vivo de las proyecciones y matrices de confusión.
 
 ## Archivos principales
-- `preparacion_y_baseline_hito2.py`: pipeline completo de preparación y baseline
-- `reports/hito2_dashboard.html`: dashboard preliminar PDF/HTML
-- `reports/hito2_regresion.png`: visualización del desempeño del frente 1
-- `reports/hito2_clasificacion.png`: visualización del desempeño del frente 2
-- `data/dataset_frente1_hito2_preparado.csv`: dataset preparado del frente 1
-- `data/dataset_frente2_hito2_preparado.csv`: dataset preparado del frente 2
+* `preparacion_y_baseline_hito2.py`: script central con todo el flujo de limpieza, ingeniería, balanceo y entrenamiento.
+* `dashboard_hito2_streamlit.py` aplicación web dinámica desarrollada para consumir los resultados.
+* `reports/` carpeta de destino donde el código autogenerará los reportes en formato json y los datos de proyección tras su primera ejecución.
+* `data/` directorio que contiene los conjuntos de datos base provenientes de la etapa anterior.
 
 ## Cómo ejecutarlo
 
@@ -32,12 +32,10 @@ python Hito2_Preparacion_Baseline/preparacion_y_baseline_hito2.py
 streamlit run Hito2_Preparacion_Baseline/dashboard_hito2_streamlit.py
 ```
 
-## Criterio de evaluación
-Se cubren los elementos de la rúbrica:
-- Data Collecting: uso del dataset validado del Hito 1
-- Data Cleaning: manejo de nulos y limpieza de registros
-- Data Transformation: feature engineering temporal y categórica
-- Data Reduction: selección de variables relevantes para baseline
-- Data Integration: preparación de datasets unificados y listos para modelado
-- Baseline: modelo base funcional y métricas iniciales
-- Demostración: dashboard con visualizaciones preliminares
+## Criterio de evaluación cubiertos
+* Recolección de datos utilizando los conjuntos validados del hito previo.
+* Limpieza de datos aplicando técnicas específicas para series de tiempo y datos espaciales sin mezclar el orden cronológico.
+* Transformación de datos mediante estandarización y codificación de variables categóricas.
+* Balanceo de clases justificado matemáticamente para evitar sesgos hacia las categorías mayoritarias asegurando la detección de amenazas críticas.
+* Modelado base funcional con resultados cuantificables que apoyan directamente a los objetivos de desarrollo sostenible 13 y 15.
+* Demostración visual mediante una interfaz web interactiva que grafica los horizontes predictivos y el rendimiento del clasificador en tiempo real.

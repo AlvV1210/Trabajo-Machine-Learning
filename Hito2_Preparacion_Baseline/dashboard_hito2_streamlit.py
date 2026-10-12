@@ -1,112 +1,118 @@
-from __future__ import annotations
-
 import json
 from pathlib import Path
-
-import matplotlib.pyplot as plt
 import pandas as pd
+import matplotlib.pyplot as plt
 import streamlit as st
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 
-ROOT = Path(__file__).resolve().parents[1]
-DATA_DIR = ROOT / "data"
-REPORTS_DIR = ROOT / "reports"
+ruta_raiz = Path(__file__).resolve().parents[1]
+ruta_reportes = ruta_raiz / "reports"
+archivo_resumen = ruta_reportes / "hito2_resumen.json"
 
-FR1_PATH = DATA_DIR / "dataset_frente1_hito2_preparado.csv"
-FR2_PATH = DATA_DIR / "dataset_frente2_hito2_preparado.csv"
-SUMMARY_PATH = REPORTS_DIR / "hito2_resumen.json"
+st.set_page_config(page_title="Panel Interactivo Hito Dos", layout="wide")
 
+def cargar_metricas():
+    if archivo_resumen.exists():
+        with open(archivo_resumen, "r", encoding="utf-8") as archivo:
+            return json.load(archivo)
+    return None
 
-@st.cache_data
-def cargar_datos() -> tuple[pd.DataFrame, pd.DataFrame, dict]:
-    fr1 = pd.read_csv(FR1_PATH)
-    fr2 = pd.read_csv(FR2_PATH)
+def cargar_resultados(nombre_archivo):
+    ruta = ruta_reportes / nombre_archivo
+    if ruta.exists():
+        return pd.read_csv(ruta)
+    return None
 
-    if SUMMARY_PATH.exists():
-        with SUMMARY_PATH.open("r", encoding="utf-8") as archivo:
-            resumen = json.load(archivo)
+st.title("Proyecto Biodiversity Guard Predict")
+st.caption("Fase de modelado base y preparación de datos")
+
+metricas = cargar_metricas()
+
+pestaña_uno, pestaña_dos = st.tabs(["Frente 1: Predicción continua", "Frente 2: Clasificación de riesgo"])
+
+with pestaña_uno:
+    st.header("Análisis de pérdida de cobertura forestal")
+    
+    st.subheader("Preparación de datos y selección de características")
+    st.write("1. Limpieza y preprocesamiento")
+    st.write("Técnicas de imputación de valores nulos utilizando forward fill y backward fill para series de tiempo, lo que preserva la continuidad climática.")
+    st.write("Técnicas de estandarización empleando StandardScaler para los datos climáticos continuos.")
+    st.write("Codificación de variables categóricas mediante transformaciones directas y variables dummy.")
+    
+    st.write("2. Ingeniería de características")
+    st.write("Se procedió con la creación de rezagos predictivos a siete y veintiocho días para proyectar los resultados al futuro. Además se incorporaron medias móviles sobre las variables climáticas para capturar el comportamiento temporal acumulado.")
+    
+    if metricas:
+        st.subheader("Indicadores de éxito técnico")
+        col1, col2, col3, col4 = st.columns(4)
+        col1.metric("Error absoluto medio a 7 días", f"{metricas['frente_uno']['mae_7d']:.4f}")
+        col2.metric("Raíz error cuadrático a 7 días", f"{metricas['frente_uno']['rmse_7d']:.4f}")
+        col3.metric("Error absoluto medio a 28 días", f"{metricas['frente_uno']['mae_28d']:.4f}")
+        col4.metric("Raíz error cuadrático a 28 días", f"{metricas['frente_uno']['rmse_28d']:.4f}")
+
+    st.subheader("Visualización del horizonte predictivo")
+    opcion_horizonte = st.radio(
+        "Seleccione el horizonte predictivo a evaluar",
+        ["Proyección a siete días", "Proyección a veintiocho días"]
+    )
+    
+    if opcion_horizonte == "Proyección a siete días":
+        datos_grafico = cargar_resultados("resultados_f1_7d.csv")
+        titulo_dinamico = "Comparativa de eventos críticos Proyección a 7 días"
+        etiqueta_dinamica = "Predicción a 7 días"
+        color_dinamico = "orange"
     else:
-        resumen = {
-            "frente_1": {"metrics": {"mae": 0.0, "rmse": 0.0, "r2": 0.0}},
-            "frente_2": {"metrics": {"accuracy": 0.0, "weighted_f1": 0.0, "macro_f1": 0.0}},
-        }
-    return fr1, fr2, resumen
+        datos_grafico = cargar_resultados("resultados_f1_28d.csv")
+        titulo_dinamico = "Comparativa de eventos críticos Proyección a 28 días"
+        etiqueta_dinamica = "Predicción a 28 días"
+        color_dinamico = "salmon"
+        
+    if datos_grafico is not None:
+        picos = datos_grafico[datos_grafico['Real'] > 0].head(40)
+        figura_regresion, eje_regresion = plt.subplots(figsize=(10, 4))
+        eje_regresion.plot(picos['Real'].values, label='Pérdida de cobertura real', color='teal', marker='o')
+        eje_regresion.plot(picos['Prediccion'].values, label=etiqueta_dinamica, color=color_dinamico, linestyle='dashed', marker='x')
+        eje_regresion.set_title(titulo_dinamico)
+        eje_regresion.set_xlabel("Eventos registrados")
+        eje_regresion.set_ylabel("Hectáreas perdidas")
+        eje_regresion.legend()
+        eje_regresion.grid(alpha=0.3)
+        st.pyplot(figura_regresion)
 
+with pestaña_dos:
+    st.header("Análisis del nivel de riesgo de amenaza")
+    
+    st.subheader("Manejo del desbalanceo y selección de características")
+    st.write("1. Manejo de desbalanceo de clases")
+    st.write("Se explica la aplicación de técnicas de sobremuestreo sintético y el uso de pesos para la clasificación de riesgo. Esto garantiza que las alertas críticas no sean ignoradas.")
+    
+    if metricas:
+        col_antes, col_despues = st.columns(2)
+        with col_antes:
+            st.write("Tabla de clases antes del balanceo")
+            df_antes = pd.DataFrame(list(metricas['frente_dos']['conteo_antes'].items()), columns=["Nivel de riesgo", "Cantidad"])
+            st.table(df_antes)
+        with col_despues:
+            st.write("Tabla de clases después del balanceo")
+            df_despues = pd.DataFrame(list(metricas['frente_dos']['conteo_despues'].items()), columns=["Nivel de riesgo", "Cantidad"])
+            st.table(df_despues)
+            
+    st.write("2. Ingeniería de características")
+    st.write("Se crearon nuevas variables derivadas como el índice de estrés hídrico y la densidad de telemetría anómala. Estas métricas mejoran el poder predictivo ya que combinan la vulnerabilidad geográfica directa con la precisión analítica de los sensores.")
 
-st.set_page_config(page_title="Hito 2 - Dashboard", layout="wide")
-st.title("Hito 2: Preparación y Baseline")
-st.caption("BIODIVERSITY-GUARD Predict - Fase 3 y 4 inicial de CRISP-DM")
+    if metricas:
+        st.subheader("Indicadores de éxito técnico")
+        col_acc, col_f1 = st.columns(2)
+        col_acc.metric("Exactitud global del modelo", f"{metricas['frente_dos']['accuracy']:.4f}")
+        col_f1.metric("Métrica F1 Macro priorizada", f"{metricas['frente_dos']['macro_f1']:.4f}")
 
-fr1, fr2, resumen = cargar_datos()
-
-reg = resumen["frente_1"]["metrics"]
-cls = resumen["frente_2"]["metrics"]
-
-st.subheader("Resumen ejecutivo")
-col1, col2, col3, col4 = st.columns(4)
-col1.metric("MAE", f"{reg['mae']:.4f}")
-col2.metric("RMSE", f"{reg['rmse']:.4f}")
-col3.metric("R²", f"{reg['r2']:.4f}")
-col4.metric("Macro F1", f"{cls['macro_f1']:.4f}")
-
-st.write("""Se validó la preparación de datos con limpieza de nulos, imputación por mediana, generación de features temporales y de riesgo, y se entrenó un baseline funcional para ambos frentes analíticos.""")
-
-st.subheader("1. Data Preparation")
-
-st.markdown(
-    """
-    - Limpieza de valores nulos en variables numéricas.
-    - Conversión de fechas para extraer mes, año y semana del año.
-    - Generación de indicadores como `alerta_observada`, `event_flag`, `lluvia_flag` y señales temporales.
-    - Selección de variables relevantes para regresión y clasificación.
-    """
-)
-
-with st.expander("Vista previa del dataset del Frente 1"):
-    st.dataframe(fr1.head(10), width="stretch")
-
-with st.expander("Vista previa del dataset del Frente 2"):
-    st.dataframe(fr2.head(10), width="stretch")
-
-st.subheader("2. Baseline")
-col_a, col_b = st.columns(2)
-col_a.metric("Accuracy", f"{cls['accuracy']:.4f}")
-col_b.metric("Weighted F1", f"{cls['weighted_f1']:.4f}")
-
-st.markdown("""
-- Frente 1: modelo base de regresión con árbol de decisión.
-- Frente 2: modelo base de clasificación con árbol de decisión.
-- Split train/test estratificado con semilla 42 para garantizar reproducibilidad.
-""")
-
-st.subheader("3. Demostración")
-
-fig1, ax1 = plt.subplots(figsize=(8, 5))
-ax1.scatter(fr1["perdida_ha"], fr1["n_alertas"], alpha=0.6, color="#2f6fed")
-ax1.set_title("Relación entre pérdida y número de alertas")
-ax1.set_xlabel("perdida_ha")
-ax1.set_ylabel("n_alertas")
-ax1.grid(alpha=0.2)
-st.pyplot(fig1)
-
-fig2, ax2 = plt.subplots(figsize=(8, 5))
-ax2.hist(fr1["perdida_ha"], bins=30, color="#0f766e", edgecolor="white")
-ax2.set_title("Distribución de perdida_ha")
-ax2.set_xlabel("perdida_ha")
-ax2.set_ylabel("Frecuencia")
-ax2.grid(axis="y", alpha=0.2)
-st.pyplot(fig2)
-
-fig3, ax3 = plt.subplots(figsize=(8, 5))
-conteo = fr2["Nivel_Riesgo"].value_counts().sort_index()
-ax3.bar(["Bajo", "Moderado", "Alto", "Crítico"], [conteo.get(0, 0), conteo.get(1, 0), conteo.get(2, 0), conteo.get(3, 0)], color=["#60a5fa", "#fbbf24", "#f97316", "#ef4444"])
-ax3.set_title("Distribución del nivel de riesgo")
-ax3.set_ylabel("Cantidad")
-ax3.grid(axis="y", alpha=0.25)
-st.pyplot(fig3)
-
-st.subheader("4. Indicadores clave")
-
-fr1_summary = fr1[["temperatura_media", "humedad_media", "precipitacion_suma", "n_alertas", "perdida_ha"]].describe().T
-st.dataframe(fr1_summary, width="stretch")
-
-st.caption("Dashboard generado con Streamlit para presentación del Hito 2.")
+    st.subheader("Matriz de confusión de riesgo")
+    datos_clasificacion = cargar_resultados("resultados_f2.csv")
+    
+    if datos_clasificacion is not None:
+        matriz = confusion_matrix(datos_clasificacion['Real'], datos_clasificacion['Prediccion'])
+        visualizacion = ConfusionMatrixDisplay(confusion_matrix=matriz, display_labels=["Bajo", "Moderado", "Alto", "Crítico"])
+        
+        figura_clasificacion, eje_clasificacion = plt.subplots(figsize=(6, 4))
+        visualizacion.plot(cmap=plt.cm.Blues, ax=eje_clasificacion)
+        st.pyplot(figura_clasificacion)

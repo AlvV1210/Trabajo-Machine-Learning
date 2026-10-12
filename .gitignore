@@ -2,3 +2,6 @@
 dataset diverso foco1/
 dataset diverso foco2/
 datasets finales/
+# Archivos autogenerados
+reports/*.csv
+reports/*.json
