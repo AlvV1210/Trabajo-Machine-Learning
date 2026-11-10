@@ -21,7 +21,9 @@ def guardar(figura: plt.Figure, nombre: str, ajustar: bool = True) -> None:
 
 
 def cargar_datos() -> tuple[pd.DataFrame, pd.DataFrame]:
-    frente1 = pd.read_csv(DATA / "dataset_frente1_hito1.csv")
+    frente1 = pd.read_csv(DATA / "dataset_frente1_hito1_final.csv")
+    # El dataset final no trae alerta_observada: se deriva de si existía un conteo ATD.
+    frente1["alerta_observada"] = frente1["n_alertas"].notna()
     frente2 = pd.read_csv(DATA / "dataset_frente2_hito1_final.csv")
     return frente1, frente2
 

@@ -1,0 +1,235 @@
+{
+  "frente_1": {
+    "summary": {
+      "archivo_entrada": "dataset_frente1_hito1_final.csv",
+      "filas_iniciales": 44772,
+      "filas_preparadas": 43953,
+      "semanas": 161,
+      "cuadrantes": 273,
+      "semanas_excluidas_sin_cobertura_satelital": 3,
+      "nulos_clima_imputados": {
+        "temperatura_media": 5187,
+        "humedad_media": 5460,
+        "precipitacion_suma": 5187
+      },
+      "n_features": 44,
+      "perdida_media_ha": 0.17796259640980136,
+      "perdida_maxima_ha": 92.25,
+      "porcentaje_semanas_con_perdida": 7.282779332468774,
+      "variables_excluidas": {
+        "n_alertas": "fuga: perdida_ha = n_alertas x 0.09",
+        "perdida_biomasa_t, emisiones_co2_t": "transformaciones lineales de tasa_deforestacion_ha_anio (r = 1.0)",
+        "mb_expansion_mineria": "prácticamente idéntica a mb_mineria (dif. máx. 0.005)"
+      }
+    },
+    "features": [
+      "perdida_ha",
+      "perdida_lag1",
+      "perdida_lag2",
+      "perdida_suma_4s",
+      "perdida_suma_8s",
+      "perdida_suma_12s",
+      "perdida_suma_26s",
+      "perdida_suma_52s",
+      "semanas_con_alerta_4s",
+      "semanas_con_alerta_8s",
+      "semanas_con_alerta_12s",
+      "semanas_con_alerta_26s",
+      "semanas_con_alerta_52s",
+      "perdida_ewm_4s",
+      "perdida_media_historica",
+      "frecuencia_alerta_historica",
+      "semanas_desde_ultima_alerta",
+      "temperatura_lag1",
+      "precipitacion_lag1",
+      "temperatura_media_4s",
+      "humedad_media_4s",
+      "precipitacion_suma_4s",
+      "temperatura_media_12s",
+      "humedad_media_12s",
+      "precipitacion_suma_12s",
+      "mes_sin",
+      "mes_cos",
+      "temporada_seca",
+      "cobertura_anp",
+      "tasa_deforestacion_ha_anio",
+      "mb_bosque",
+      "mb_bosque_inundable",
+      "mb_agropecuario",
+      "mb_expansion_agro",
+      "mb_mineria",
+      "mb_infraestructura",
+      "mb_agua",
+      "densidad_poblacional",
+      "zee_Zonas_de_tratamiento_especial",
+      "zee_Zonas_de_vocación_urbano_y_o_industrial",
+      "zee_Zonas_productivas",
+      "causa_infraestructura",
+      "causa_mineria",
+      "causa_ninguna"
+    ],
+    "metrics": {
+      "7d": {
+        "periodo_test_desde": "2025-09-23",
+        "filas_train": 30303,
+        "filas_test": 13104,
+        "tasa_eventos_test": 0.1137057387057387,
+        "riesgo": {
+          "roc_auc": 0.8318806970989652,
+          "pr_auc": 0.29905510415816133,
+          "umbral": 0.251398792318782,
+          "recall": 0.9147651006711409,
+          "precision": 0.22329619921363042,
+          "f1": 0.3589676060047406,
+          "accuracy": 0.6285103785103785,
+          "captura_ha_top10_pct": 60.64365580943121,
+          "captura_ha_top20_pct": 80.07194944093341,
+          "captura_ha_top30_pct": 88.07389402041808,
+          "ha_en_cuadrantes_alertados_pct": 92.36363636363636,
+          "naive_recall": 0.6818791946308724,
+          "naive_precision": 0.2652049073348995,
+          "naive_f1": 0.3818831046795715,
+          "persistencia_roc_auc": 0.832841323188977,
+          "persistencia_captura_ha_top20_pct": 79.59747204666992
+        },
+        "magnitud": {
+          "mae_ha": 0.4514135860905598,
+          "rmse_ha": 2.697682800731948,
+          "r2_cuadrante_semana": 0.040881506142810164,
+          "naive_mae_ha": 0.5322103937728938,
+          "naive_rmse_ha": 2.734462187777948,
+          "spearman_ranking_espacial": 0.9393519417267545,
+          "ha_reales_test": 4628.25,
+          "ha_predichas_test": 2620.965950267905
+        }
+      },
+      "30d": {
+        "periodo_test_desde": "2025-09-02",
+        "filas_train": 28665,
+        "filas_test": 13104,
+        "tasa_eventos_test": 0.29662698412698413,
+        "riesgo": {
+          "roc_auc": 0.8808101962796846,
+          "pr_auc": 0.7533049720347067,
+          "umbral": 0.3202791378403175,
+          "recall": 0.8621044507332133,
+          "precision": 0.5713554987212276,
+          "f1": 0.6872436423297785,
+          "accuracy": 0.7672466422466423,
+          "captura_ha_top10_pct": 61.52584126224243,
+          "captura_ha_top20_pct": 77.51780264496439,
+          "captura_ha_top30_pct": 84.84830351265632,
+          "ha_en_cuadrantes_alertados_pct": 88.17345860012367,
+          "naive_recall": 0.6341651659377412,
+          "naive_precision": 0.6731294374658656,
+          "naive_f1": 0.6530666313418996,
+          "persistencia_roc_auc": 0.8892785696300215,
+          "persistencia_captura_ha_top20_pct": 77.43402549219076
+        },
+        "magnitud": {
+          "mae_ha": 1.3071708331954484,
+          "rmse_ha": 5.786101591821268,
+          "r2_cuadrante_semana": 0.08587948511581955,
+          "naive_mae_ha": 1.6070856227106227,
+          "naive_rmse_ha": 5.959722531385073,
+          "spearman_ranking_espacial": 0.9537013385159171,
+          "ha_reales_test": 18047.88,
+          "ha_predichas_test": 6875.773183809701
+        }
+      }
+    },
+    "top_features_30d": {
+      "perdida_ewm_4s": 0.1646,
+      "semanas_desde_ultima_alerta": 0.1055,
+      "semanas_con_alerta_12s": 0.1005,
+      "perdida_suma_12s": 0.0952,
+      "perdida_suma_8s": 0.074,
+      "semanas_con_alerta_8s": 0.064,
+      "semanas_con_alerta_26s": 0.0458,
+      "perdida_suma_26s": 0.0343,
+      "mb_agropecuario": 0.0326,
+      "frecuencia_alerta_historica": 0.0253,
+      "perdida_suma_52s": 0.0245,
+      "precipitacion_suma_12s": 0.0202,
+      "mb_agua": 0.0193,
+      "tasa_deforestacion_ha_anio": 0.0188,
+      "perdida_media_historica": 0.0173
+    },
+    "dataset_path": "data/dataset_frente1_hito2_preparado.csv"
+  },
+  "frente_2": {
+    "summary": {
+      "archivo_entrada": "dataset_frente2_hito1_final.csv",
+      "filas_iniciales": 15434,
+      "filas_sin_regla_de_riesgo_excluidas": 6331,
+      "filas_preparadas": 9103,
+      "clases": {
+        "Bajo": 4647,
+        "Moderado": 339,
+        "Alto": 1408,
+        "Crítico": 2709
+      }
+    },
+    "metrics": {
+      "validacion": "StratifiedGroupKFold (5 folds, agrupado por imagen)",
+      "accuracy": 1.0,
+      "f1_macro": 1.0,
+      "f1_weighted": 1.0,
+      "roc_auc_ovr_macro": 1.0,
+      "recall_por_clase": {
+        "Bajo": 1.0,
+        "Moderado": 1.0,
+        "Alto": 1.0,
+        "Crítico": 1.0
+      },
+      "precision_por_clase": {
+        "Bajo": 1.0,
+        "Moderado": 1.0,
+        "Alto": 1.0,
+        "Crítico": 1.0
+      },
+      "f1_macro_std_folds": 0.0,
+      "recall_critico_min_folds": 1.0,
+      "classification_report": {
+        "Bajo": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 4647.0
+        },
+        "Moderado": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 339.0
+        },
+        "Alto": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 1408.0
+        },
+        "Crítico": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 2709.0
+        },
+        "accuracy": 1.0,
+        "macro avg": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 9103.0
+        },
+        "weighted avg": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 9103.0
+        }
+      }
+    },
+    "dataset_path": "data/dataset_frente2_hito2_preparado.csv"
+  }
+}

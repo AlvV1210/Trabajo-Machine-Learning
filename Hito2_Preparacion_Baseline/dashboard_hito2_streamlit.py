@@ -1,3 +1,9 @@
+"""Dashboard preliminar del Hito 2 (Streamlit).
+
+Requiere haber ejecutado antes:
+    python Hito2_Preparacion_Baseline/preparacion_y_baseline_hito2.py
+"""
+
 from __future__ import annotations
 
 import json
@@ -14,99 +20,156 @@ REPORTS_DIR = ROOT / "reports"
 FR1_PATH = DATA_DIR / "dataset_frente1_hito2_preparado.csv"
 FR2_PATH = DATA_DIR / "dataset_frente2_hito2_preparado.csv"
 SUMMARY_PATH = REPORTS_DIR / "hito2_resumen.json"
+RANKING_PATH = REPORTS_DIR / "hito2_ranking_cuadrantes.csv"
+ETIQUETAS_RIESGO = ["Bajo", "Moderado", "Alto", "Crítico"]
 
 
 @st.cache_data
-def cargar_datos() -> tuple[pd.DataFrame, pd.DataFrame, dict]:
-    fr1 = pd.read_csv(FR1_PATH)
+def cargar() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, dict]:
+    faltan = [p.name for p in (FR1_PATH, FR2_PATH, SUMMARY_PATH, RANKING_PATH) if not p.exists()]
+    if faltan:
+        st.error(
+            "Faltan artefactos: " + ", ".join(faltan)
+            + ". Ejecute primero `python Hito2_Preparacion_Baseline/preparacion_y_baseline_hito2.py`."
+        )
+        st.stop()
+    fr1 = pd.read_csv(FR1_PATH, parse_dates=["fecha"])
     fr2 = pd.read_csv(FR2_PATH)
-
-    if SUMMARY_PATH.exists():
-        with SUMMARY_PATH.open("r", encoding="utf-8") as archivo:
-            resumen = json.load(archivo)
-    else:
-        resumen = {
-            "frente_1": {"metrics": {"mae": 0.0, "rmse": 0.0, "r2": 0.0}},
-            "frente_2": {"metrics": {"accuracy": 0.0, "weighted_f1": 0.0, "macro_f1": 0.0}},
-        }
-    return fr1, fr2, resumen
+    ranking = pd.read_csv(RANKING_PATH)
+    resumen = json.loads(SUMMARY_PATH.read_text(encoding="utf-8"))
+    return fr1, fr2, ranking, resumen
 
 
-st.set_page_config(page_title="Hito 2 - Dashboard", layout="wide")
+st.set_page_config(page_title="Hito 2 - BIODIVERSITY-GUARD Predict", layout="wide")
 st.title("Hito 2: Preparación y Baseline")
-st.caption("BIODIVERSITY-GUARD Predict - Fase 3 y 4 inicial de CRISP-DM")
+st.caption("BIODIVERSITY-GUARD Predict · CRISP-DM fase 3 y 4 (inicial) · Reserva Nacional Tambopata")
 
-fr1, fr2, resumen = cargar_datos()
+fr1, fr2, ranking, resumen = cargar()
+m1 = resumen["frente_1"]["metrics"]
+m2 = resumen["frente_2"]["metrics"]
+s1 = resumen["frente_1"]["summary"]
 
-reg = resumen["frente_1"]["metrics"]
-cls = resumen["frente_2"]["metrics"]
-
+# ---------------------------------------------------------------------------
 st.subheader("Resumen ejecutivo")
-col1, col2, col3, col4 = st.columns(4)
-col1.metric("MAE", f"{reg['mae']:.4f}")
-col2.metric("RMSE", f"{reg['rmse']:.4f}")
-col3.metric("R²", f"{reg['r2']:.4f}")
-col4.metric("Macro F1", f"{cls['macro_f1']:.4f}")
-
-st.write("""Se validó la preparación de datos con limpieza de nulos, imputación por mediana, generación de features temporales y de riesgo, y se entrenó un baseline funcional para ambos frentes analíticos.""")
-
-st.subheader("1. Data Preparation")
-
-st.markdown(
-    """
-    - Limpieza de valores nulos en variables numéricas.
-    - Conversión de fechas para extraer mes, año y semana del año.
-    - Generación de indicadores como `alerta_observada`, `event_flag`, `lluvia_flag` y señales temporales.
-    - Selección de variables relevantes para regresión y clasificación.
-    """
+c1, c2, c3, c4 = st.columns(4)
+c1.metric("AUC riesgo 30 días", f"{m1['30d']['riesgo']['roc_auc']:.3f}")
+c2.metric("Recall riesgo 30 días", f"{m1['30d']['riesgo']['recall']:.3f}")
+c3.metric(
+    "Hectáreas captadas (top 20 % cuadrantes)",
+    f"{m1['30d']['riesgo']['captura_ha_top20_pct']:.0f} %",
+)
+c4.metric("F2 · F1 macro / Recall Crítico", f"{m2['f1_macro']:.3f} / {m2['recall_por_clase']['Crítico']:.3f}")
+st.write(
+    f"Validación temporal: el modelo se entrena con semanas anteriores y se evalúa desde "
+    f"**{m1['30d']['periodo_test_desde']}** (datos nunca vistos). Se usa el dataset "
+    f"`{s1['archivo_entrada']}` ({s1['cuadrantes']} cuadrantes, {s1['semanas']} semanas)."
 )
 
-with st.expander("Vista previa del dataset del Frente 1"):
-    st.dataframe(fr1.head(10), width="stretch")
+tab_alertas, tab_f1, tab_f2, tab_datos = st.tabs(
+    ["Alertas por cuadrante", "Frente 1 · Deforestación", "Frente 2 · Riesgo de incursión", "Preparación de datos"]
+)
 
-with st.expander("Vista previa del dataset del Frente 2"):
-    st.dataframe(fr2.head(10), width="stretch")
+# ---------------------------------------------------------------------------
+with tab_alertas:
+    st.markdown(f"**Predicción desde la semana {ranking['semana'].iloc[0]}** (última semana con alertas satelitales).")
+    k = st.slider("Cuadrantes a priorizar", 5, 80, 20, step=5)
+    mostrar = ranking.head(k)[
+        ["cuadrante_id", "prob_7d", "prob_30d", "ha_riesgo_30d", "biomasa_riesgo_30d_t", "co2_riesgo_30d_t", "nivel_alerta"]
+    ].rename(
+        columns={
+            "cuadrante_id": "Cuadrante",
+            "prob_7d": "P(deforestación 7 d)",
+            "prob_30d": "P(deforestación 30 d)",
+            "ha_riesgo_30d": "ha estimadas 30 d",
+            "biomasa_riesgo_30d_t": "Biomasa en riesgo (t)",
+            "co2_riesgo_30d_t": "CO₂ en riesgo (t)",
+            "nivel_alerta": "Nivel de alerta",
+        }
+    )
+    st.dataframe(mostrar.style.format(precision=2), width="stretch", hide_index=True)
+    st.caption(
+        f"Cuadrantes con alerta activa a 30 días: {int(ranking['alerta_30d'].sum())} de {len(ranking)} "
+        f"(umbral {m1['30d']['riesgo']['umbral']:.2f}, elegido en validación para Recall ≥ 0.80)."
+    )
 
-st.subheader("2. Baseline")
-col_a, col_b = st.columns(2)
-col_a.metric("Accuracy", f"{cls['accuracy']:.4f}")
-col_b.metric("Weighted F1", f"{cls['weighted_f1']:.4f}")
+# ---------------------------------------------------------------------------
+with tab_f1:
+    filas = []
+    for h in ("7d", "30d"):
+        r, g = m1[h]["riesgo"], m1[h]["magnitud"]
+        filas.append(
+            {
+                "Horizonte": h,
+                "ROC-AUC": r["roc_auc"],
+                "PR-AUC": r["pr_auc"],
+                "Recall": r["recall"],
+                "Precisión": r["precision"],
+                "F1": r["f1"],
+                "Captura ha top 20 %": r["captura_ha_top20_pct"],
+                "AUC persistencia": r["persistencia_roc_auc"],
+                "MAE (ha)": g["mae_ha"],
+                "MAE ingenuo (ha)": g["naive_mae_ha"],
+                "RMSE (ha)": g["rmse_ha"],
+                "Spearman espacial": g["spearman_ranking_espacial"],
+            }
+        )
+    st.dataframe(pd.DataFrame(filas).style.format(precision=3), width="stretch", hide_index=True)
+    col_a, col_b = st.columns(2)
+    col_a.image(str(REPORTS_DIR / "hito2_f1_roc.png"))
+    col_b.image(str(REPORTS_DIR / "hito2_f1_captura.png"))
+    st.image(str(REPORTS_DIR / "hito2_regresion.png"))
+    st.image(str(REPORTS_DIR / "hito2_f1_importancia.png"), width=650)
 
-st.markdown("""
-- Frente 1: modelo base de regresión con árbol de decisión.
-- Frente 2: modelo base de clasificación con árbol de decisión.
-- Split train/test estratificado con semilla 42 para garantizar reproducibilidad.
-""")
+    st.markdown("**Explorar un cuadrante**")
+    cuadrante = st.selectbox("Cuadrante", sorted(fr1["cuadrante_id"].unique()), index=0)
+    serie = fr1[fr1["cuadrante_id"] == cuadrante].set_index("fecha")
+    fig, ax = plt.subplots(figsize=(10, 3.5))
+    ax.bar(serie.index, serie["perdida_ha"], width=6, color="#c2551b")
+    ax.set(ylabel="ha perdidas por semana", title=f"Historial de pérdida - {cuadrante}")
+    ax.grid(alpha=0.2)
+    st.pyplot(fig)
 
-st.subheader("3. Demostración")
+# ---------------------------------------------------------------------------
+with tab_f2:
+    filas = [
+        {"Clase": c, "Recall": m2["recall_por_clase"][c], "Precisión": m2["precision_por_clase"][c]}
+        for c in ETIQUETAS_RIESGO
+    ]
+    col_a, col_b = st.columns([1, 1])
+    col_a.dataframe(pd.DataFrame(filas).style.format(precision=3), width="stretch", hide_index=True)
+    col_a.markdown(
+        f"Accuracy {m2['accuracy']:.3f} · F1 macro {m2['f1_macro']:.3f} · ROC-AUC {m2['roc_auc_ovr_macro']:.3f}  \n"
+        f"Validación: {m2['validacion']}."
+    )
+    col_a.info(
+        "Las etiquetas de Nivel_Riesgo provienen de reglas heurísticas (clase detectada + zona). "
+        "Un desempeño perfecto confirma que el modelo reproduce esas reglas; su validación real se hará "
+        "con los datos del módulo de IA en el Hito 3."
+    )
+    col_b.image(str(REPORTS_DIR / "hito2_clasificacion.png"))
+    conteo = fr2["Nivel_Riesgo"].value_counts().sort_index()
+    fig, ax = plt.subplots(figsize=(7, 3.5))
+    ax.bar(ETIQUETAS_RIESGO, [conteo.get(i, 0) for i in range(4)], color=["#60a5fa", "#fbbf24", "#f97316", "#ef4444"])
+    ax.set(title="Distribución del nivel de riesgo (antes de SMOTE)", ylabel="Anotaciones")
+    st.pyplot(fig)
 
-fig1, ax1 = plt.subplots(figsize=(8, 5))
-ax1.scatter(fr1["perdida_ha"], fr1["n_alertas"], alpha=0.6, color="#2f6fed")
-ax1.set_title("Relación entre pérdida y número de alertas")
-ax1.set_xlabel("perdida_ha")
-ax1.set_ylabel("n_alertas")
-ax1.grid(alpha=0.2)
-st.pyplot(fig1)
+# ---------------------------------------------------------------------------
+with tab_datos:
+    st.markdown(
+        f"""
+- Dataset Frente 1: `{s1['archivo_entrada']}` → {s1['filas_preparadas']:,} filas preparadas,
+  {s1['n_features']} variables. Se excluyeron {s1['semanas_excluidas_sin_cobertura_satelital']} semanas
+  posteriores al 31/08/2026 (sin cobertura del shapefile de alertas PNCB 2026).
+- Clima: interpolación lineal temporal por cuadrante (+ relleno adelante/atrás).
+- `n_alertas` se excluye de las entradas: `perdida_ha = n_alertas × 0.09` (sería fuga del target).
+- Rezagos, sumas móviles (4–52 semanas), semanas desde la última alerta, clima acumulado y estacionalidad.
+- Frente 2: imputación por mediana, índice de estrés hídrico, densidad de telemetría anómala,
+  one-hot de clase y fuente, SMOTE dentro de cada fold y `class_weight='balanced'`.
+"""
+    )
+    with st.expander("Vista previa Frente 1"):
+        st.dataframe(fr1.head(20), width="stretch")
+    with st.expander("Vista previa Frente 2"):
+        st.dataframe(fr2.head(20), width="stretch")
 
-fig2, ax2 = plt.subplots(figsize=(8, 5))
-ax2.hist(fr1["perdida_ha"], bins=30, color="#0f766e", edgecolor="white")
-ax2.set_title("Distribución de perdida_ha")
-ax2.set_xlabel("perdida_ha")
-ax2.set_ylabel("Frecuencia")
-ax2.grid(axis="y", alpha=0.2)
-st.pyplot(fig2)
-
-fig3, ax3 = plt.subplots(figsize=(8, 5))
-conteo = fr2["Nivel_Riesgo"].value_counts().sort_index()
-ax3.bar(["Bajo", "Moderado", "Alto", "Crítico"], [conteo.get(0, 0), conteo.get(1, 0), conteo.get(2, 0), conteo.get(3, 0)], color=["#60a5fa", "#fbbf24", "#f97316", "#ef4444"])
-ax3.set_title("Distribución del nivel de riesgo")
-ax3.set_ylabel("Cantidad")
-ax3.grid(axis="y", alpha=0.25)
-st.pyplot(fig3)
-
-st.subheader("4. Indicadores clave")
-
-fr1_summary = fr1[["temperatura_media", "humedad_media", "precipitacion_suma", "n_alertas", "perdida_ha"]].describe().T
-st.dataframe(fr1_summary, width="stretch")
-
-st.caption("Dashboard generado con Streamlit para presentación del Hito 2.")
+st.caption("Dashboard generado con Streamlit para la presentación del Hito 2.")
