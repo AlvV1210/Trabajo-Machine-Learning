@@ -1,0 +1,14 @@
+pandas>=2.1
+numpy>=1.26
+scipy>=1.11
+scikit-learn>=1.4
+imbalanced-learn>=0.12
+lightgbm>=4.0
+xgboost>=2.0
+matplotlib>=3.8
+plotly>=5.24
+streamlit>=1.46
+pyproj>=3.6
+joblib>=1.3
+# opcional: geometría exacta de cuadrantes con los shapefiles SERNANP
+geopandas>=0.14
