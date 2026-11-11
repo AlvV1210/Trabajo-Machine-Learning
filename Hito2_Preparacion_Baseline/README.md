@@ -2,6 +2,9 @@
 
 Este entregable corresponde a la fase 3 y 4 inicial de CRISP-DM para el proyecto BIODIVERSITY-GUARD Predict.
 
+## Corrección (Hito 3)
+El Frente 1 ahora usa `data/dataset_frente1_hito1_final.csv` (273 cuadrantes, 22 columnas). Se eliminó la fuga del objetivo (`n_alertas` de la misma semana), los objetivos se desplazan a 7 y 30 días y la partición es temporal. El Frente 2 usa la telemetría realista del Hito 3 (`data/dataset_frente2_hito3_realista.csv`) y deja de usar `fuente` como predictor.
+
 ## Objetivo
 Demostrar que los datos ya están preparados para modelado y que existe un modelo base funcional para ambos frentes analíticos:
 - Frente 1: regresión de pérdida de cobertura forestal (`perdida_ha`)

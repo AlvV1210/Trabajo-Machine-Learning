@@ -1,0 +1,92 @@
+{
+  "features": [
+    "perdida_lag0",
+    "perdida_lag1",
+    "perdida_lag2",
+    "perdida_lag3",
+    "perdida_suma_4s",
+    "perdida_suma_8s",
+    "perdida_suma_12s",
+    "perdida_suma_26s",
+    "perdida_suma_52s",
+    "perdida_max_12s",
+    "semanas_activas_12s",
+    "semanas_activas_52s",
+    "perdida_media_hist",
+    "perdida_ewm_4",
+    "perdida_ewm_12",
+    "semanas_desde_ultima",
+    "alerta_observada",
+    "region_perdida_t",
+    "region_perdida_4s",
+    "region_perdida_12s",
+    "region_celdas_activas_4s",
+    "cuota_celda_52s",
+    "temperatura_media",
+    "humedad_media",
+    "precipitacion_suma",
+    "temperatura_media_lag1",
+    "humedad_media_lag1",
+    "precipitacion_suma_lag1",
+    "temperatura_media_mm3",
+    "humedad_media_mm3",
+    "precipitacion_suma_mm3",
+    "precip_suma_4s",
+    "precip_suma_12s",
+    "deficit_hidrico_4s",
+    "mes_sin",
+    "mes_cos",
+    "temporada_seca",
+    "cobertura_anp",
+    "tasa_deforestacion_ha_anio",
+    "perdida_biomasa_t",
+    "mb_bosque",
+    "mb_bosque_inundable",
+    "mb_agropecuario",
+    "mb_expansion_agro",
+    "mb_mineria",
+    "mb_expansion_mineria",
+    "mb_infraestructura",
+    "mb_agua",
+    "densidad_poblacional",
+    "presion_antropica",
+    "en_reserva",
+    "actividad_x_mineria",
+    "vocacion_zee",
+    "causa_principal"
+  ],
+  "categorias": {
+    "vocacion_zee": [
+      "Zonas de proteccion y conservacion ecological",
+      "Zonas de tratamiento especial",
+      "Zonas de vocación urbano y/o industrial",
+      "Zonas productivas"
+    ],
+    "causa_principal": [
+      "agropecuario",
+      "infraestructura",
+      "mineria",
+      "ninguna"
+    ]
+  },
+  "horizontes": {
+    "7d": {
+      "smear": 1.0505950626243186,
+      "umbral": 0.1299999999999999,
+      "cal": {
+        "a": 0.6778518591758801,
+        "b": 0.25468312444968894,
+        "k": 1.0
+      }
+    },
+    "30d": {
+      "smear": 1.087592714714777,
+      "umbral": 0.2699999999999999,
+      "cal": {
+        "a": 1.3478131877414397,
+        "b": 1.4374962371548239,
+        "k": 1.125984834846083
+      }
+    }
+  }
+}

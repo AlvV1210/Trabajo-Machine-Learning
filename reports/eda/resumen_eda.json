@@ -1,0 +1,142 @@
+{
+  "frente1": {
+    "filas": 44772,
+    "semanas": 164,
+    "cuadrantes": 273,
+    "nulos_pct": {
+      "temperatura_media": 11.59,
+      "humedad_media": 12.2,
+      "precipitacion_suma": 11.59,
+      "n_alertas": 92.85
+    },
+    "descriptivos": {
+      "temperatura_media": {
+        "count": 39585.0,
+        "mean": 25.36,
+        "std": 2.095,
+        "min": 16.199,
+        "25%": 24.72,
+        "50%": 25.696,
+        "75%": 26.735,
+        "max": 28.994
+      },
+      "humedad_media": {
+        "count": 39312.0,
+        "mean": 89.96,
+        "std": 3.884,
+        "min": 76.839,
+        "25%": 87.473,
+        "50%": 90.824,
+        "75%": 92.571,
+        "max": 98.0
+      },
+      "precipitacion_suma": {
+        "count": 39585.0,
+        "mean": 50.615,
+        "std": 64.03,
+        "min": 0.0,
+        "25%": 3.2,
+        "50%": 27.6,
+        "75%": 72.2,
+        "max": 367.8
+      },
+      "perdida_ha": {
+        "count": 44772.0,
+        "mean": 0.175,
+        "std": 1.734,
+        "min": 0.0,
+        "25%": 0.0,
+        "50%": 0.0,
+        "75%": 0.0,
+        "max": 92.25
+      },
+      "n_alertas": {
+        "count": 3201.0,
+        "mean": 27.151,
+        "std": 67.148,
+        "min": 1.0,
+        "25%": 2.0,
+        "50%": 7.0,
+        "75%": 24.0,
+        "max": 1025.0
+      }
+    },
+    "outliers_iqr": {
+      "temperatura_media": 3003,
+      "humedad_media": 819,
+      "precipitacion_suma": 1911,
+      "n_alertas": 358,
+      "perdida_ha": 3201
+    },
+    "pct_semanas_sin_perdida": 92.85044224068615,
+    "pearson_con_perdida": {
+      "temperatura_media": 0.02,
+      "humedad_media": -0.034,
+      "precipitacion_suma": -0.017,
+      "perdida_ha": 1.0,
+      "tasa_deforestacion_ha_anio": 0.138,
+      "mb_mineria": 0.115,
+      "mb_agropecuario": 0.011,
+      "mb_bosque": -0.07,
+      "cobertura_anp": -0.069,
+      "densidad_poblacional": -0.002
+    },
+    "spearman_con_perdida": {
+      "temperatura_media": 0.083,
+      "humedad_media": -0.113,
+      "precipitacion_suma": -0.036,
+      "perdida_ha": 1.0,
+      "tasa_deforestacion_ha_anio": 0.256,
+      "mb_mineria": 0.194,
+      "mb_agropecuario": 0.229,
+      "mb_bosque": -0.207,
+      "cobertura_anp": -0.183,
+      "densidad_poblacional": 0.08
+    },
+    "normalidad": {
+      "temperatura_media": {
+        "K2": 11536.680635925768,
+        "p": 0.0,
+        "asimetria": -1.525773309225575,
+        "curtosis": 3.373749925514863
+      },
+      "humedad_media": {
+        "K2": 3888.20616106563,
+        "p": 0.0,
+        "asimetria": -0.8316305841044981,
+        "curtosis": 0.6376641644748111
+      },
+      "precipitacion_suma": {
+        "K2": 18534.676713371693,
+        "p": 0.0,
+        "asimetria": 2.241271869056268,
+        "curtosis": 6.569264338785995
+      },
+      "perdida_ha": {
+        "K2": 109235.47095051315,
+        "p": 0.0,
+        "asimetria": 25.825764108578213,
+        "curtosis": 958.826423378884
+      }
+    },
+    "perdida_por_causa": {
+      "agropecuario": 3404.5,
+      "infraestructura": 0.7,
+      "mineria": 3284.6,
+      "ninguna": 1132.1
+    },
+    "corr_tasa_historica_vs_perdida_2023_2026": 0.8264009688318368
+  },
+  "frente2": {
+    "filas": 15434,
+    "clases_detectadas": 32,
+    "nivel_riesgo": {
+      "Sin regla": 6331,
+      "Bajo": 4647,
+      "Crítico": 2709,
+      "Alto": 1408,
+      "Moderado": 339
+    },
+    "image_id_unicos": 2162
+  }
+}

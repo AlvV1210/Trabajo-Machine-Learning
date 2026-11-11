@@ -1,0 +1,931 @@
+{
+  "generado": "2026-11-11 13:50",
+  "frente_1": {
+    "filas": 44772,
+    "cuadrantes": 273,
+    "semanas": 164,
+    "n_features": 54,
+    "features": [
+      "perdida_lag0",
+      "perdida_lag1",
+      "perdida_lag2",
+      "perdida_lag3",
+      "perdida_suma_4s",
+      "perdida_suma_8s",
+      "perdida_suma_12s",
+      "perdida_suma_26s",
+      "perdida_suma_52s",
+      "perdida_max_12s",
+      "semanas_activas_12s",
+      "semanas_activas_52s",
+      "perdida_media_hist",
+      "perdida_ewm_4",
+      "perdida_ewm_12",
+      "semanas_desde_ultima",
+      "alerta_observada",
+      "region_perdida_t",
+      "region_perdida_4s",
+      "region_perdida_12s",
+      "region_celdas_activas_4s",
+      "cuota_celda_52s",
+      "temperatura_media",
+      "humedad_media",
+      "precipitacion_suma",
+      "temperatura_media_lag1",
+      "humedad_media_lag1",
+      "precipitacion_suma_lag1",
+      "temperatura_media_mm3",
+      "humedad_media_mm3",
+      "precipitacion_suma_mm3",
+      "precip_suma_4s",
+      "precip_suma_12s",
+      "deficit_hidrico_4s",
+      "mes_sin",
+      "mes_cos",
+      "temporada_seca",
+      "cobertura_anp",
+      "tasa_deforestacion_ha_anio",
+      "perdida_biomasa_t",
+      "mb_bosque",
+      "mb_bosque_inundable",
+      "mb_agropecuario",
+      "mb_expansion_agro",
+      "mb_mineria",
+      "mb_expansion_mineria",
+      "mb_infraestructura",
+      "mb_agua",
+      "densidad_poblacional",
+      "presion_antropica",
+      "en_reserva",
+      "actividad_x_mineria",
+      "vocacion_zee",
+      "causa_principal"
+    ],
+    "porcentaje_ceros": 0.9285044224068615,
+    "perdida_7d": {
+      "busqueda_hiperparametros": [
+        {
+          "id": 0,
+          "PR_AUC": 0.1413,
+          "MAE": 0.0573,
+          "num_leaves": null,
+          "min_child_samples": null,
+          "learning_rate": null,
+          "n_estimators": null,
+          "colsample_bytree": null,
+          "reg_lambda": null
+        },
+        {
+          "id": 1,
+          "PR_AUC": 0.1486,
+          "MAE": 0.0632,
+          "num_leaves": 15.0,
+          "min_child_samples": 100.0,
+          "learning_rate": 0.05,
+          "n_estimators": 300.0,
+          "colsample_bytree": 0.7,
+          "reg_lambda": 5.0
+        },
+        {
+          "id": 2,
+          "PR_AUC": 0.1596,
+          "MAE": 0.067,
+          "num_leaves": 15.0,
+          "min_child_samples": 100.0,
+          "learning_rate": 0.03,
+          "n_estimators": 200.0,
+          "colsample_bytree": 0.7,
+          "reg_lambda": 5.0
+        },
+        {
+          "id": 3,
+          "PR_AUC": 0.12,
+          "MAE": 0.0514,
+          "num_leaves": 63.0,
+          "min_child_samples": 100.0,
+          "learning_rate": 0.08,
+          "n_estimators": 500.0,
+          "colsample_bytree": 0.7,
+          "reg_lambda": 0.0
+        },
+        {
+          "id": 4,
+          "PR_AUC": 0.1384,
+          "MAE": 0.0578,
+          "num_leaves": 63.0,
+          "min_child_samples": 50.0,
+          "learning_rate": 0.05,
+          "n_estimators": 300.0,
+          "colsample_bytree": 0.5,
+          "reg_lambda": 5.0
+        },
+        {
+          "id": 5,
+          "PR_AUC": 0.1198,
+          "MAE": 0.0521,
+          "num_leaves": 63.0,
+          "min_child_samples": 50.0,
+          "learning_rate": 0.05,
+          "n_estimators": 500.0,
+          "colsample_bytree": 0.7,
+          "reg_lambda": 1.0
+        },
+        {
+          "id": 6,
+          "PR_AUC": 0.1413,
+          "MAE": 0.0624,
+          "num_leaves": 31.0,
+          "min_child_samples": 20.0,
+          "learning_rate": 0.03,
+          "n_estimators": 300.0,
+          "colsample_bytree": 0.9,
+          "reg_lambda": 0.0
+        },
+        {
+          "id": 7,
+          "PR_AUC": 0.1607,
+          "MAE": 0.0611,
+          "num_leaves": 63.0,
+          "min_child_samples": 100.0,
+          "learning_rate": 0.03,
+          "n_estimators": 300.0,
+          "colsample_bytree": 0.5,
+          "reg_lambda": 5.0
+        },
+        {
+          "id": 8,
+          "PR_AUC": 0.1487,
+          "MAE": 0.0571,
+          "num_leaves": 63.0,
+          "min_child_samples": 50.0,
+          "learning_rate": 0.03,
+          "n_estimators": 500.0,
+          "colsample_bytree": 0.7,
+          "reg_lambda": 5.0
+        },
+        {
+          "id": 9,
+          "PR_AUC": 0.1452,
+          "MAE": 0.0585,
+          "num_leaves": 63.0,
+          "min_child_samples": 100.0,
+          "learning_rate": 0.08,
+          "n_estimators": 200.0,
+          "colsample_bytree": 0.7,
+          "reg_lambda": 1.0
+        }
+      ],
+      "mejores_parametros": {
+        "num_leaves": 63,
+        "min_child_samples": 50,
+        "learning_rate": 0.03,
+        "n_estimators": 500,
+        "colsample_bytree": 0.7,
+        "reg_lambda": 5.0
+      },
+      "comparativa": {
+        "Persistencia": {
+          "MAE": 0.5209957734573119,
+          "MAE_std_folds": 0.38868109695244357,
+          "RMSE": 3.491387938621882,
+          "R2": -0.919661361620433,
+          "R2_log": -0.7523923185647889,
+          "Spearman_espacial": 0.2121699805812593,
+          "Captura_top20": 0.3630770930316939
+        },
+        "Árbol baseline (Hito 2)": {
+          "MAE": 0.37467901032412987,
+          "MAE_std_folds": 0.19344455719025383,
+          "RMSE": 2.603435737610915,
+          "R2": -0.06738755128293406,
+          "R2_log": -0.10640764424836435,
+          "Spearman_espacial": 0.39364318254865316,
+          "Captura_top20": 0.7100167673158577
+        },
+        "Random Forest": {
+          "MAE": 0.3972156845518943,
+          "MAE_std_folds": 0.20086291837783365,
+          "RMSE": 2.486866936515264,
+          "R2": 0.02605707802960955,
+          "R2_log": -0.1305539736155048,
+          "Spearman_espacial": 0.37472280509446193,
+          "Captura_top20": 0.7974343271236966
+        },
+        "XGBoost": {
+          "MAE": 0.44233177085544345,
+          "MAE_std_folds": 0.23402981555388452,
+          "RMSE": 2.5995904953686755,
+          "R2": -0.06423684347426084,
+          "R2_log": -0.3632358563281941,
+          "Spearman_espacial": 0.33904908726526184,
+          "Captura_top20": 0.7373748607201361
+        },
+        "LightGBM": {
+          "MAE": 0.42739096119531933,
+          "MAE_std_folds": 0.22609874335187435,
+          "RMSE": 2.5878594732625784,
+          "R2": -0.05465347507555718,
+          "R2_log": -0.3290314977531077,
+          "Spearman_espacial": 0.2757025390167832,
+          "Captura_top20": 0.7005171774253175
+        },
+        "Hurdle LightGBM": {
+          "MAE": 0.3184547533877188,
+          "MAE_std_folds": 0.18772858105318813,
+          "RMSE": 2.5235622977712056,
+          "R2": -0.00289731793911141,
+          "R2_log": -0.01116920094622742,
+          "Spearman_espacial": 0.3754098571824682,
+          "Captura_top20": 0.805540033847458
+        }
+      },
+      "deteccion": {
+        "ROC_AUC": 0.820859941862389,
+        "PR_AUC": 0.2791089698815517,
+        "tasa_base": 0.09478726401803325,
+        "umbral": 0.1299999999999999,
+        "Recall": 0.7080856123662307,
+        "Precision": 0.25536020583190394,
+        "F1": 0.3753545540497951
+      },
+      "calibracion": {
+        "Brier_sin_calibrar": 0.08329332944242143,
+        "Brier_calibrada": 0.07832532017752593,
+        "total_estimado_sobre_real_tipico": 0.244052629454613,
+        "total_estimado_sobre_real_alto": 1.3609165378252999,
+        "MAE_escenario_alto": 0.5479541203990578,
+        "parametros_finales": {
+          "a": 0.6778518591758801,
+          "b": 0.25468312444968894,
+          "k": 1.0
+        }
+      },
+      "mejora_MAE_vs_persistencia": 0.3887575108825493,
+      "filas_evaluadas": 17745,
+      "folds": 9
+    },
+    "perdida_30d": {
+      "busqueda_hiperparametros": [
+        {
+          "id": 0,
+          "PR_AUC": 0.3976,
+          "MAE": 0.2195,
+          "num_leaves": null,
+          "min_child_samples": null,
+          "learning_rate": null,
+          "n_estimators": null,
+          "colsample_bytree": null,
+          "reg_lambda": null
+        },
+        {
+          "id": 1,
+          "PR_AUC": 0.4284,
+          "MAE": 0.2267,
+          "num_leaves": 15.0,
+          "min_child_samples": 100.0,
+          "learning_rate": 0.05,
+          "n_estimators": 300.0,
+          "colsample_bytree": 0.7,
+          "reg_lambda": 5.0
+        },
+        {
+          "id": 2,
+          "PR_AUC": 0.4408,
+          "MAE": 0.227,
+          "num_leaves": 15.0,
+          "min_child_samples": 100.0,
+          "learning_rate": 0.03,
+          "n_estimators": 200.0,
+          "colsample_bytree": 0.7,
+          "reg_lambda": 5.0
+        },
+        {
+          "id": 3,
+          "PR_AUC": 0.3835,
+          "MAE": 0.2153,
+          "num_leaves": 63.0,
+          "min_child_samples": 100.0,
+          "learning_rate": 0.08,
+          "n_estimators": 500.0,
+          "colsample_bytree": 0.7,
+          "reg_lambda": 0.0
+        },
+        {
+          "id": 4,
+          "PR_AUC": 0.4034,
+          "MAE": 0.2176,
+          "num_leaves": 63.0,
+          "min_child_samples": 50.0,
+          "learning_rate": 0.05,
+          "n_estimators": 300.0,
+          "colsample_bytree": 0.5,
+          "reg_lambda": 5.0
+        },
+        {
+          "id": 5,
+          "PR_AUC": 0.395,
+          "MAE": 0.2133,
+          "num_leaves": 63.0,
+          "min_child_samples": 50.0,
+          "learning_rate": 0.05,
+          "n_estimators": 500.0,
+          "colsample_bytree": 0.7,
+          "reg_lambda": 1.0
+        },
+        {
+          "id": 6,
+          "PR_AUC": 0.408,
+          "MAE": 0.2427,
+          "num_leaves": 31.0,
+          "min_child_samples": 20.0,
+          "learning_rate": 0.03,
+          "n_estimators": 300.0,
+          "colsample_bytree": 0.9,
+          "reg_lambda": 0.0
+        },
+        {
+          "id": 7,
+          "PR_AUC": 0.4233,
+          "MAE": 0.2186,
+          "num_leaves": 63.0,
+          "min_child_samples": 100.0,
+          "learning_rate": 0.03,
+          "n_estimators": 300.0,
+          "colsample_bytree": 0.5,
+          "reg_lambda": 5.0
+        },
+        {
+          "id": 8,
+          "PR_AUC": 0.4049,
+          "MAE": 0.2183,
+          "num_leaves": 63.0,
+          "min_child_samples": 50.0,
+          "learning_rate": 0.03,
+          "n_estimators": 500.0,
+          "colsample_bytree": 0.7,
+          "reg_lambda": 5.0
+        },
+        {
+          "id": 9,
+          "PR_AUC": 0.3891,
+          "MAE": 0.2262,
+          "num_leaves": 63.0,
+          "min_child_samples": 100.0,
+          "learning_rate": 0.08,
+          "n_estimators": 200.0,
+          "colsample_bytree": 0.7,
+          "reg_lambda": 1.0
+        }
+      ],
+      "mejores_parametros": {
+        "num_leaves": 63,
+        "min_child_samples": 100,
+        "learning_rate": 0.03,
+        "n_estimators": 300,
+        "colsample_bytree": 0.5,
+        "reg_lambda": 5.0
+      },
+      "comparativa": {
+        "Persistencia": {
+          "MAE": 1.4251222970577806,
+          "MAE_std_folds": 0.6500787833286901,
+          "RMSE": 6.08635448799711,
+          "R2": -0.16547360450633852,
+          "R2_log": 0.14432037987532442,
+          "Spearman_espacial": 0.5735386703260253,
+          "Captura_top20": 0.6911927124627822
+        },
+        "Árbol baseline (Hito 2)": {
+          "MAE": 1.255503644080765,
+          "MAE_std_folds": 0.5329528290813867,
+          "RMSE": 5.673026716665811,
+          "R2": -0.012552646248359167,
+          "R2_log": 0.21916616140106293,
+          "Spearman_espacial": 0.6315822605032656,
+          "Captura_top20": 0.6774911224922538
+        },
+        "Random Forest": {
+          "MAE": 1.1941769525408326,
+          "MAE_std_folds": 0.43633787479618297,
+          "RMSE": 5.310224051408779,
+          "R2": 0.11281611181241935,
+          "R2_log": 0.36655167230602426,
+          "Spearman_espacial": 0.6210517830368122,
+          "Captura_top20": 0.8144058268664258
+        },
+        "XGBoost": {
+          "MAE": 1.307769571304859,
+          "MAE_std_folds": 0.46612637150367,
+          "RMSE": 5.414297555096252,
+          "R2": 0.0777000294155451,
+          "R2_log": 0.271996064474022,
+          "Spearman_espacial": 0.5823522431104391,
+          "Captura_top20": 0.7902516472761646
+        },
+        "LightGBM": {
+          "MAE": 1.320308577075613,
+          "MAE_std_folds": 0.4489610259819008,
+          "RMSE": 5.572506472076495,
+          "R2": 0.023012249796480644,
+          "R2_log": 0.2496083756092251,
+          "Spearman_espacial": 0.5493149356207172,
+          "Captura_top20": 0.7699783945628929
+        },
+        "Hurdle LightGBM": {
+          "MAE": 1.1222525174689253,
+          "MAE_std_folds": 0.5082573828740926,
+          "RMSE": 5.469696588660256,
+          "R2": 0.058729544019915814,
+          "R2_log": 0.3277222373832549,
+          "Spearman_espacial": 0.6223712248943107,
+          "Captura_top20": 0.8151193358056142
+        }
+      },
+      "deteccion": {
+        "ROC_AUC": 0.8822624481330552,
+        "PR_AUC": 0.7553698905173454,
+        "tasa_base": 0.2708850289495451,
+        "umbral": 0.2699999999999999,
+        "Recall": 0.804143947655398,
+        "Precision": 0.6123567513702043,
+        "F1": 0.695266830096172
+      },
+      "calibracion": {
+        "Brier_sin_calibrar": 0.13037140957789842,
+        "Brier_calibrada": 0.11632612570277451,
+        "total_estimado_sobre_real_tipico": 0.32008805256390604,
+        "total_estimado_sobre_real_alto": 1.0475292429922904,
+        "MAE_escenario_alto": 1.5615213018699248,
+        "parametros_finales": {
+          "a": 1.3478131877414397,
+          "b": 1.4374962371548239,
+          "k": 1.125984834846083
+        }
+      },
+      "mejora_MAE_vs_persistencia": 0.21252195703775145,
+      "filas_evaluadas": 16926,
+      "folds": 8
+    },
+    "importancia_permutacion": [
+      {
+        "variable": "perdida_ewm_4",
+        "importancia": 0.01967
+      },
+      {
+        "variable": "presion_antropica",
+        "importancia": 0.00669
+      },
+      {
+        "variable": "perdida_suma_8s",
+        "importancia": 0.00478
+      },
+      {
+        "variable": "tasa_deforestacion_ha_anio",
+        "importancia": 0.00366
+      },
+      {
+        "variable": "perdida_ewm_12",
+        "importancia": 0.00325
+      },
+      {
+        "variable": "perdida_suma_26s",
+        "importancia": 0.00232
+      },
+      {
+        "variable": "perdida_media_hist",
+        "importancia": 0.0019
+      },
+      {
+        "variable": "perdida_biomasa_t",
+        "importancia": 0.00188
+      },
+      {
+        "variable": "precip_suma_4s",
+        "importancia": 0.00143
+      },
+      {
+        "variable": "cuota_celda_52s",
+        "importancia": 0.0013
+      },
+      {
+        "variable": "semanas_activas_12s",
+        "importancia": 0.00121
+      },
+      {
+        "variable": "region_perdida_12s",
+        "importancia": 0.00117
+      },
+      {
+        "variable": "perdida_suma_52s",
+        "importancia": 0.00073
+      },
+      {
+        "variable": "temperatura_media_lag1",
+        "importancia": 0.00057
+      },
+      {
+        "variable": "mb_bosque_inundable",
+        "importancia": 0.00047
+      },
+      {
+        "variable": "cobertura_anp",
+        "importancia": 0.00044
+      },
+      {
+        "variable": "mb_agropecuario",
+        "importancia": 0.0004
+      },
+      {
+        "variable": "perdida_suma_12s",
+        "importancia": 0.00037
+      },
+      {
+        "variable": "precip_suma_12s",
+        "importancia": 0.00035
+      },
+      {
+        "variable": "perdida_lag3",
+        "importancia": 0.00027
+      }
+    ],
+    "errores_por_zona": {
+      "Amortiguamiento": {
+        "MAE": 1.7371250778072396,
+        "MAE_std_folds": 0.9204597512292088,
+        "RMSE": 6.247625077757578,
+        "R2": 0.04591873465487528,
+        "R2_log": 0.2406482609070032,
+        "Spearman_espacial": 0.5503885122464373,
+        "Captura_top20": 0.6924271977470347
+      },
+      "Reserva": {
+        "MAE": 0.7319741258769412,
+        "MAE_std_folds": 0.4666424828322762,
+        "RMSE": 4.91241901998471,
+        "R2": 0.05405365654442673,
+        "R2_log": 0.370933450479379,
+        "Spearman_espacial": 0.5424054733570566,
+        "Captura_top20": 0.9584168693200984
+      }
+    }
+  },
+  "frente_2": {
+    "filas_originales": 15434,
+    "filas_etiquetadas_hito1": 9103,
+    "eventos": 5277,
+    "estaciones": 58,
+    "semanas": 164,
+    "eventos_por_semana": 32.176829268292686,
+    "porcentaje_amenazas": 0.11938601478112564,
+    "criticos_por_semana": 1.396341463414634,
+    "distribucion": {
+      "Bajo": 4653,
+      "Moderado": 125,
+      "Alto": 270,
+      "Crítico": 229
+    },
+    "clases": {
+      "mono": 1923,
+      "capibara": 960,
+      "snake": 596,
+      "rana": 523,
+      "guacamayo": 425,
+      "lobo_de_rio": 200,
+      "persona": 190,
+      "vehiculo_ligero": 130,
+      "vehiculo_maderero": 85,
+      "trampa_caza": 75,
+      "arma_blanca": 60,
+      "motosierra": 45,
+      "arma_fuego": 35,
+      "jaguar": 20,
+      "cazador": 10
+    },
+    "comparativa": {
+      "Regresión logística": {
+        "Accuracy": 0.9931779420125071,
+        "F1_macro": 0.9647664579853886,
+        "F1_ponderado": 0.9932245676096424,
+        "Recall_Critico": 0.9606986899563319,
+        "Recall_Alto": 0.937037037037037,
+        "Kappa_cuadratico": 0.9888360684082104,
+        "ROC_AUC_ovr": 0.9986504087790802,
+        "F1_macro_std": 0.009836497747380553
+      },
+      "Árbol baseline (Hito 2)": {
+        "Accuracy": 0.9855978775819595,
+        "F1_macro": 0.907156441681794,
+        "F1_ponderado": 0.9859392790861531,
+        "Recall_Critico": 0.851528384279476,
+        "Recall_Alto": 0.8814814814814815,
+        "Kappa_cuadratico": 0.9753563628384609,
+        "ROC_AUC_ovr": 0.9956693869316515,
+        "F1_macro_std": 0.017857773951220644
+      },
+      "Random Forest": {
+        "Accuracy": 0.9958309645631988,
+        "F1_macro": 0.976906300662168,
+        "F1_ponderado": 0.9958422753098769,
+        "Recall_Critico": 0.9650655021834061,
+        "Recall_Alto": 0.9666666666666667,
+        "Kappa_cuadratico": 0.9938557317588924,
+        "ROC_AUC_ovr": 0.9996839793479255,
+        "F1_macro_std": 0.014535152283753603
+      },
+      "XGBoost": {
+        "Accuracy": 0.997536479060072,
+        "F1_macro": 0.9853969460931963,
+        "F1_ponderado": 0.9975333046831677,
+        "Recall_Critico": 0.9781659388646288,
+        "Recall_Alto": 0.9925925925925926,
+        "Kappa_cuadratico": 0.9977711983964819,
+        "ROC_AUC_ovr": 0.9996219683318319,
+        "F1_macro_std": 0.010979683866149864
+      },
+      "LightGBM": {
+        "Accuracy": 0.9981049838923631,
+        "F1_macro": 0.9906622527965986,
+        "F1_ponderado": 0.9981167216841836,
+        "Recall_Critico": 0.9868995633187773,
+        "Recall_Alto": 1.0,
+        "Kappa_cuadratico": 0.9962361759854061,
+        "ROC_AUC_ovr": 0.999949225339528,
+        "F1_macro_std": 0.01446736258327426
+      }
+    },
+    "gridsearch": {
+      "mejores_parametros": {
+        "min_child_samples": 5,
+        "n_estimators": 400,
+        "num_leaves": 7
+      },
+      "F1_macro_cv": 0.992869803325851,
+      "resultados": [
+        {
+          "params": "{'min_child_samples': 5, 'n_estimators': 100, 'num_leaves': 7}",
+          "mean_test_score": 0.97531,
+          "std_test_score": 0.02696
+        },
+        {
+          "params": "{'min_child_samples': 5, 'n_estimators': 100, 'num_leaves': 15}",
+          "mean_test_score": 0.98927,
+          "std_test_score": 0.01379
+        },
+        {
+          "params": "{'min_child_samples': 5, 'n_estimators': 100, 'num_leaves': 31}",
+          "mean_test_score": 0.9838,
+          "std_test_score": 0.01532
+        },
+        {
+          "params": "{'min_child_samples': 5, 'n_estimators': 200, 'num_leaves': 7}",
+          "mean_test_score": 0.98992,
+          "std_test_score": 0.01189
+        },
+        {
+          "params": "{'min_child_samples': 5, 'n_estimators': 200, 'num_leaves': 15}",
+          "mean_test_score": 0.99092,
+          "std_test_score": 0.01447
+        },
+        {
+          "params": "{'min_child_samples': 5, 'n_estimators': 200, 'num_leaves': 31}",
+          "mean_test_score": 0.98565,
+          "std_test_score": 0.01372
+        },
+        {
+          "params": "{'min_child_samples': 5, 'n_estimators': 400, 'num_leaves': 7}",
+          "mean_test_score": 0.99287,
+          "std_test_score": 0.01069
+        },
+        {
+          "params": "{'min_child_samples': 5, 'n_estimators': 400, 'num_leaves': 15}",
+          "mean_test_score": 0.99134,
+          "std_test_score": 0.01365
+        },
+        {
+          "params": "{'min_child_samples': 5, 'n_estimators': 400, 'num_leaves': 31}",
+          "mean_test_score": 0.98674,
+          "std_test_score": 0.01211
+        },
+        {
+          "params": "{'min_child_samples': 20, 'n_estimators': 100, 'num_leaves': 7}",
+          "mean_test_score": 0.98791,
+          "std_test_score": 0.01374
+        },
+        {
+          "params": "{'min_child_samples': 20, 'n_estimators': 100, 'num_leaves': 15}",
+          "mean_test_score": 0.98983,
+          "std_test_score": 0.01456
+        },
+        {
+          "params": "{'min_child_samples': 20, 'n_estimators': 100, 'num_leaves': 31}",
+          "mean_test_score": 0.9799,
+          "std_test_score": 0.01297
+        },
+        {
+          "params": "{'min_child_samples': 20, 'n_estimators': 200, 'num_leaves': 7}",
+          "mean_test_score": 0.98778,
+          "std_test_score": 0.014
+        },
+        {
+          "params": "{'min_child_samples': 20, 'n_estimators': 200, 'num_leaves': 15}",
+          "mean_test_score": 0.99144,
+          "std_test_score": 0.01454
+        },
+        {
+          "params": "{'min_child_samples': 20, 'n_estimators': 200, 'num_leaves': 31}",
+          "mean_test_score": 0.98379,
+          "std_test_score": 0.0102
+        },
+        {
+          "params": "{'min_child_samples': 20, 'n_estimators': 400, 'num_leaves': 7}",
+          "mean_test_score": 0.98911,
+          "std_test_score": 0.01361
+        },
+        {
+          "params": "{'min_child_samples': 20, 'n_estimators': 400, 'num_leaves': 15}",
+          "mean_test_score": 0.99186,
+          "std_test_score": 0.01371
+        },
+        {
+          "params": "{'min_child_samples': 20, 'n_estimators': 400, 'num_leaves': 31}",
+          "mean_test_score": 0.98461,
+          "std_test_score": 0.01125
+        }
+      ]
+    },
+    "validacion_temporal_2026": {
+      "Accuracy": 0.9983221476510067,
+      "F1_macro": 0.9933402020212032,
+      "F1_ponderado": 0.9983121881547736,
+      "Recall_Critico": 0.9838709677419355,
+      "Recall_Alto": 1.0,
+      "Kappa_cuadratico": 0.993298936037445,
+      "eventos_prueba": 1192,
+      "matriz": [
+        [
+          1035,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          28,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          66,
+          0
+        ],
+        [
+          1,
+          0,
+          0,
+          61
+        ]
+      ]
+    },
+    "prueba_estres": {
+      "0%": {
+        "Accuracy": 0.9984839871138904,
+        "F1_macro": 0.9926593780020485,
+        "F1_ponderado": 0.9984912301336172,
+        "Recall_Critico": 0.9956331877729258,
+        "Recall_Alto": 1.0,
+        "Kappa_cuadratico": 0.9965835877029356
+      },
+      "5%": {
+        "Accuracy": 0.9962099677847261,
+        "F1_macro": 0.9770322734561969,
+        "F1_ponderado": 0.996212787262021,
+        "Recall_Critico": 0.9868995633187773,
+        "Recall_Alto": 0.9851851851851852,
+        "Kappa_cuadratico": 0.9935374095507732
+      },
+      "10%": {
+        "Accuracy": 0.9933674436232708,
+        "F1_macro": 0.9584930979830362,
+        "F1_ponderado": 0.9933727375797875,
+        "Recall_Critico": 0.9694323144104804,
+        "Recall_Alto": 0.9592592592592593,
+        "Kappa_cuadratico": 0.9904874667887655
+      },
+      "20%": {
+        "Accuracy": 0.9844608679173773,
+        "F1_macro": 0.9040659994931718,
+        "F1_ponderado": 0.9844934170566689,
+        "Recall_Critico": 0.9213973799126638,
+        "Recall_Alto": 0.8592592592592593,
+        "Kappa_cuadratico": 0.9792250334365751
+      }
+    },
+    "importancia_permutacion": [
+      {
+        "variable": "es_amenaza",
+        "importancia": 0.68736
+      },
+      {
+        "variable": "clase",
+        "importancia": 0.33167
+      },
+      {
+        "variable": "es_noche",
+        "importancia": 0.2412
+      },
+      {
+        "variable": "en_zona_amortiguamiento",
+        "importancia": 0.1254
+      },
+      {
+        "variable": "distancia_limite_m",
+        "importancia": 0.11193
+      },
+      {
+        "variable": "amenazas_7d_estacion",
+        "importancia": 0.1111
+      },
+      {
+        "variable": "densidad_telemetria",
+        "importancia": 0.07235
+      },
+      {
+        "variable": "distancia_a_carretera_m",
+        "importancia": 0.03614
+      },
+      {
+        "variable": "confidence_score",
+        "importancia": 0.00097
+      },
+      {
+        "variable": "hora_cos",
+        "importancia": 0.00097
+      },
+      {
+        "variable": "distancia_a_rio_m",
+        "importancia": 0.00097
+      },
+      {
+        "variable": "log_dist_rio",
+        "importancia": 0.0
+      },
+      {
+        "variable": "hora_sin",
+        "importancia": 0.0
+      },
+      {
+        "variable": "indice_estres_hidrico",
+        "importancia": 0.0
+      },
+      {
+        "variable": "log_dist_carretera",
+        "importancia": 0.0
+      },
+      {
+        "variable": "cerca_carretera_5km",
+        "importancia": 0.0
+      },
+      {
+        "variable": "cerca_limite_1km",
+        "importancia": 0.0
+      },
+      {
+        "variable": "en_zona_intangible",
+        "importancia": 0.0
+      },
+      {
+        "variable": "cerca_rio_2km",
+        "importancia": 0.0
+      }
+    ],
+    "matriz_confusion": [
+      [
+        4649,
+        0,
+        4,
+        0
+      ],
+      [
+        0,
+        122,
+        3,
+        0
+      ],
+      [
+        0,
+        0,
+        270,
+        0
+      ],
+      [
+        0,
+        0,
+        3,
+        226
+      ]
+    ]
+  },
+  "segundos": 45.5
+}

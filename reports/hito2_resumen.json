@@ -1,0 +1,86 @@
+{
+  "frente_1": {
+    "summary": {
+      "dataset": "dataset_frente1_hito1_final.csv",
+      "filas": 44772,
+      "cuadrantes": 273,
+      "semanas": 164,
+      "variables_modelo": 58,
+      "nulos_clima_antes_de_imputar": {
+        "temperatura_media": 0,
+        "humedad_media": 0,
+        "precipitacion_suma": 0
+      },
+      "porcentaje_semanas_sin_perdida": 0.9285044224068615
+    },
+    "metrics": {
+      "perdida_7d": {
+        "Persistencia": {
+          "MAE": 0.6292685439560438,
+          "RMSE": 3.9728196513487566,
+          "R2": -0.9309268993575595
+        },
+        "Árbol de decisión": {
+          "MAE": 0.4844389880474951,
+          "RMSE": 2.991787124509755,
+          "R2": -0.0950388045764794,
+          "ROC_AUC_evento": 0.49783293248369737
+        },
+        "Random Forest ponderado": {
+          "MAE": 0.7793426122233472,
+          "RMSE": 2.875945376480907,
+          "R2": -0.011880899297245673,
+          "ROC_AUC_evento": 0.49783293248369737
+        }
+      },
+      "perdida_30d": {
+        "Persistencia": {
+          "MAE": 1.4615536187949982,
+          "RMSE": 6.346098866412433,
+          "R2": 0.0996682142500881
+        },
+        "Árbol de decisión": {
+          "MAE": 1.7096670256332094,
+          "RMSE": 7.50628548996279,
+          "R2": -0.2596186195967969,
+          "ROC_AUC_evento": 0.6971553579772025
+        },
+        "Random Forest ponderado": {
+          "MAE": 1.4159326208590504,
+          "RMSE": 6.197332004006167,
+          "R2": 0.14138505962836134,
+          "ROC_AUC_evento": 0.6971553579772025
+        }
+      }
+    }
+  },
+  "frente_2": {
+    "summary": {
+      "filas": 5277,
+      "clases": {
+        "Bajo": 4653,
+        "Moderado": 125,
+        "Alto": 270,
+        "Crítico": 229
+      },
+      "balance_tras_SMOTE": {
+        "Bajo": 3722,
+        "Moderado": 3722,
+        "Alto": 3722,
+        "Crítico": 3722
+      }
+    },
+    "metrics": {
+      "Árbol de decisión": {
+        "Accuracy": 0.9839015151515151,
+        "F1_macro": 0.9037007551899144,
+        "Recall_Critico": 0.7391304347826086
+      },
+      "Random Forest + SMOTE": {
+        "Accuracy": 0.9867424242424242,
+        "F1_macro": 0.9294329033616414,
+        "Recall_Critico": 0.8478260869565217
+      }
+    }
+  }
+}

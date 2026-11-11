@@ -1,0 +1,15 @@
+# Para abrir el dashboard y usar los modelos ya entrenados
+pandas>=2.1
+numpy>=1.26
+scipy>=1.11
+lightgbm>=4.0
+plotly>=6.0
+streamlit>=1.46
+pyproj>=3.6
+Pillow>=10.0
+openpyxl>=3.1
+# Solo para volver a entrenar o regenerar figuras (opcional)
+scikit-learn>=1.4
+imbalanced-learn>=0.12
+xgboost>=2.0
+matplotlib>=3.8

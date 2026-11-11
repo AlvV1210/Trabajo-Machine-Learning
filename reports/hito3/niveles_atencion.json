@@ -1,0 +1,22 @@
+{
+  "Bajo": {
+    "acierto": 0.08234754699679046,
+    "ha_promedio": 0.2562998624484181,
+    "cuadrantes_por_semana": 175.88709677419354
+  },
+  "Moderado": {
+    "acierto": 0.5814418013437443,
+    "ha_promedio": 2.3960722716542584,
+    "cuadrantes_por_semana": 88.8225806451613
+  },
+  "Alto": {
+    "acierto": 0.9311163895486936,
+    "ha_promedio": 8.490570071258908,
+    "cuadrantes_por_semana": 6.790322580645161
+  },
+  "Crítico": {
+    "acierto": 1.0,
+    "ha_promedio": 6.11225806451613,
+    "cuadrantes_por_semana": 1.5
+  }
+}
